@@ -1,0 +1,38 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: doutorie_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+    depends_on:
+      - db
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    networks:
+      - doutorie_api
+
+  db:
+    image: mysql:8.0
+    container_name: doutorie_db
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: doutorie_api
+      MYSQL_USER: doutorie_api_user
+      MYSQL_PASSWORD: doutorie_api_password
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - doutorie_api
+
+volumes:
+  dbdata:
+
+networks:
+  doutorie_api:
+    driver: bridge
