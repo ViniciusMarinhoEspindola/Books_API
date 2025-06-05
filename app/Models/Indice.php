@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Livro;
 
 class Indice extends Model
 {
@@ -19,12 +22,16 @@ class Indice extends Model
 
     public function livro(): BelongsTo
     {
-        return $this->belongsTo('Livro', 'livro_id');
+        return $this->belongsTo(Livro::class, 'livro_id');
     }
-
 
     public function indicePai(): BelongsTo
     {
-        return $this->belongsTo('Indice', 'indice_pai_id');
+        return $this->belongsTo(Indice::class, 'indice_pai_id')->with('indicePai');
+    }
+
+    public function subindices(): HasMany
+    {
+        return $this->hasMany(Indice::class, 'indice_pai_id')->with('subindices');
     }
 }

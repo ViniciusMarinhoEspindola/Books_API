@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('titulo');
             $table->integer('pagina');
             $table->unsignedBigInteger('livro_id');
-            $table->unsignedBigInteger('indice_pai_id');
+            $table->unsignedBigInteger('indice_pai_id')->nullable();
             $table->timestamps();
 
             $table->foreign('livro_id')->references('id')->on('livros')->onDelete('cascade');

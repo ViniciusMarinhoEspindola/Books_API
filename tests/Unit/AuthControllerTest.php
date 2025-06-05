@@ -18,7 +18,7 @@ class AuthControllerTest extends TestCase
      */
     public function test_login_returns_token(): void
     {
-        $usuario = Usuario::factory()->create([
+        Usuario::factory()->create([
             'nome' => 'Usuario Teste',
             'email' => 'teste@email.com',
             'password' => Hash::make('senha123'),
